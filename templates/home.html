@@ -1,0 +1,26 @@
+<!-- 使用jinja語法 呼叫layout.html -->
+{% extends "layout.html" %}
+
+{% block sytle_list %}
+<link rel="stylesheet" href="/static/stylesheets/home.css">
+{% endblock %}
+
+{% block header %}
+<h3>這段文字只有首頁看的到</h3>
+<a href="/about">這是關於本站</a>
+<a href="/article">文章列表</a>
+{% endblock %}
+
+{% block content %}
+
+<h1>{{web_info.title}}</h1>
+<h2>{{web_info.subtitle}}</h2>
+<h2>作者:{{author_name}}</h2>
+{% if show_link %}
+<a href="about">關於本站</a>
+{% else %}
+<p>你看不到按鈕</p>
+{% endif %}
+
+<!-- 使用jinja 語法 呼叫layout.html的結尾 -->
+{% endblock content %}
