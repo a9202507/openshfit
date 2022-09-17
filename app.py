@@ -89,5 +89,5 @@ def article_page(article_id):
                                 header_title="查無文章")
     
 if __name__ == '__main__':
-    app.run(debug=False)
+    app.run(host='0.0.0.0',port='8080')
     
