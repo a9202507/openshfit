@@ -51,7 +51,7 @@ def hello():
                             web_info=web_info,
                             author_name=author_name,
                             show_link=show_link,
-                            header_title="HOME Page"
+                            header_title="Infineon powerstage efficiency calculation"
                             )
     return html
 
