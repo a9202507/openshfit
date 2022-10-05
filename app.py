@@ -8,7 +8,7 @@ print(dir(app))
 app.config['SEND_FILE_MAX_AGE_DEFAULT']=0
 author_name ="eason"
 web_info ={
-    "title":"歡迎來我的網站 IFX",
+    "title":"歡迎來我的網站 IFX 2022.1005 0517",
     "subtitle":"welcome"
 }
 
@@ -170,5 +170,5 @@ def method_name():
     pass
     
 if __name__ == '__main__':
-    app.run(host='0.0.0.0',port='8080')
+    app.run(host='127.0.0.1',port="8080")
     ## test
