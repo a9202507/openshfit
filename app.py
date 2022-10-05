@@ -1,4 +1,6 @@
-from flask import Flask,render_template
+from flask import Flask,render_template,jsonify,abort,request
+
+
 app = Flask(__name__)
 print(dir(app))
 #print(app.config)
@@ -87,6 +89,85 @@ def article_page(article_id):
         return render_template("article/not-found.html",
                                 article_id=article_id,
                                 header_title="查無文章")
+
+tasks=[
+    {
+        'id':1,
+        'title':'電話費',
+        'note':'500元',
+        'done':False
+    },
+    {
+        'id':2,
+        'title':'錄教學影片',
+        'note':'restAPI for todo',
+        'done':False 
+    }
+]
+
+@app.route('/api/tasks',methods=['GET'])
+def get_tasks():
+    return jsonify({'tasks':tasks})
+
+@app.route('/api/task/<int:task_id>',methods=['GET'])
+def get_task(task_id):
+    task= [ x for x in tasks if x['id'] == task_id]
+    if len(task)==0:
+        abort(404)
+    return jsonify({'task':task})
+
+@app.route('/api/tasks',methods=['POST'])
+def create_task():
+
+    print(f"hello,{request.json}")
+    if request.json is None or 'title' not in request.json:
+        abort(400)
+    task = {
+        'id':tasks[-1]['id']+1,
+        'title':request.json['title'],
+        'note':request.json.get('note',''),
+        'done':False
+
+
+    }
+
+    tasks.append(task)
+    return jsonify({'task':task}),201
+
+@app.route('/api/task/<int:task_id>',methods=['DELETE'])
+def delete_task(task_id):
+
+    print(f"id={task_id}")
+    task = [ x for x in tasks if x['id']==task_id]
+    if len(task)==0:
+        abort(404)
+    tasks.remove(task[0])
+    return jsonify({'result':True})
+
+@app.route('/api/task/<int:task_id>',methods=['PUT'])
+def update_task(task_id):
+    print(f"gg={request.json}")
+    task = [ x for x in tasks if x['id']==task_id]
+    if len(task)==0:
+        abort(404)
+
+    if request.json is None:
+        abort(400,"No JSON data!!!")
+    if 'title' in request.json and type(request.json['title']) != str:
+        abort(400,"title field is not a string!!!")
+    if 'note' in request.json and type(request.json['note']) != str:
+        abort(400,"title field is not a string!!!")
+    if 'done' in request.json and type(request.json['done']) != bool:
+        abort(400,"title field is not a boolean!!!")
+
+    task[0]['title']=request.json.get('title',task[0]['title'])
+    task[0]['note']=request.json.get('note',task[0]['note'])
+    task[0]['done']=request.json.get('done',task[0]['done'])
+
+    return jsonify({'task':task[0]})
+
+def method_name():
+    pass
     
 if __name__ == '__main__':
     app.run(host='0.0.0.0',port='8080')
