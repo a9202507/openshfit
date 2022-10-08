@@ -10,7 +10,7 @@ sched = BlockingScheduler()
 def scheduled_job():
     # 宣告一個排程
     sched = BlockingScheduler()
-    url_str = "http://oc12-web-efficiency.ap-sg-1.icp.infineon.com/api/tasks"
+    url_str = "http://oc13-web-efficiency.ap-sg-1.icp.infineon.com/api/tasks"
     connect = requests.get(url_str)
 
 
