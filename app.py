@@ -1,4 +1,5 @@
 from flask import Flask, render_template, jsonify, abort, request
+import os
 
 
 app = Flask(__name__)
@@ -182,5 +183,7 @@ def method_name():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port="8080")
+    port = os.environ.get('FLASK_PORT') or 8080
+    port = int(port)
+    app.run(host='0.0.0.0', port=port)
     # test for OC 2022
